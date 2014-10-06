@@ -5,6 +5,7 @@ Simple serialization for python model class.
 
 Using Simple Serailizer
 -----------------------
+```python
 
   from simple_serializer import SerializerMixin
 
@@ -19,10 +20,9 @@ Using Simple Serailizer
           self.id = _id
           self.name = name
 
-  
   u = User(1, 'Loup')
   u.serialize()
-
+```
 
 Sample result
 -------------
