@@ -26,9 +26,9 @@ Using Simple Serailizer
 
 Sample result
 -------------
-
+```python
   {'id': 1, 'name': 'Loup'}
-
+```
 
 Author
 ------
