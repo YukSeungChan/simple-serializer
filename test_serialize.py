@@ -44,6 +44,22 @@ class Notice(SerializerMixin):
         self.writer = writer
 
 
+class Contact(SerializerMixin):
+    id = None
+    title = None
+    content = None
+
+    fields = ('id', 'title', 'content')
+
+    def __init__(self, _id, title, content):
+        self.id = _id
+        self.title = title
+        self.content = content
+
+    def get_external_data(self):
+        return dict(etc='External Data')
+
+
 class SerializeTest(unittest.TestCase):
     user = None
     notice = None
@@ -98,6 +114,14 @@ class SerializeTest(unittest.TestCase):
         self.assertTrue('name' in result_dict)
         self.assertTrue('parent' in result_dict)
         self.assertEquals(['id', 'name'], result_dict['parent'].keys())
+
+    def test_include_external_data_serialize(self):
+        contact = Contact(1, 'Test Contact', 'This is test contact')
+        result_dict = contact.serialize()
+        self.assertTrue('id' in result_dict)
+        self.assertTrue('title' in result_dict)
+        self.assertTrue('content' in result_dict)
+        self.assertTrue('etc' in result_dict)
 
 
 if __name__ == '__main__':

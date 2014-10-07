@@ -2,6 +2,28 @@
 
 
 class SerializerMixin(object):
+    """
+    Mixin class for models.
+
+    Model define::
+
+        class User(SerializerMixin):
+            id = None
+            name = None
+
+            fields = ('id', 'name')
+
+            def __init__(self, _id, name):
+                self.id = _id
+                self.name = name
+
+    Model serialize::
+
+        u = User(1, 'Loup')
+        u.serialize()
+    """
+
+    fields = tuple()
 
     def serialize(self, fields=[]):
         result = dict()
@@ -23,6 +45,12 @@ class SerializerMixin(object):
                 except AttributeError:
                     continue
                 result[field] = self.get_cleaned_value(field, value)
+        try:
+            f = getattr(self, 'get_external_data')
+        except AttributeError:
+            pass
+        else:
+            result.update(f())
         return result
 
     def get_cleaned_value(self, key, value):
